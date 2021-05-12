@@ -1,8 +1,8 @@
 //! ## rust_grep
 //! rsut_grep contains implementation functions for file searches.
+use std::fs;
 use std::env;
 use std::error::Error;
-use std::fs;
 
 /// Config is the base structure for retrieving input from the user.
 #[derive(Debug)]
@@ -22,6 +22,7 @@ impl Config {
     /// ```
     /// use std::env;
     /// use std::process;
+    /// use rust_grep::Config;
     ///
     /// let config = Config::new(env::args()).unwrap_or_else(|error| {
     ///     eprintln!("Problem parsing arguments: {}", error);
@@ -158,7 +159,11 @@ Pic three.";
 Rust
 safe, fast, productive.
 Pic three.";
-        assert_eq!(vec![(0, "Rust")], search_case_insensitive(query, contents));
+        assert_eq!(
+            vec![(0, "Rust")],
+            search_case_insensitive(query, contents)
+        );
+
         let query = "FaSt";
         assert_eq!(
             vec![(1, "safe, fast, productive.")],
